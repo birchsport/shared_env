@@ -1,0 +1,110 @@
+alias grep='grep -in --color '
+alias cls='clear'
+alias move='mv '
+alias cpan='perl -MCPAN -eshell cpan shell'
+alias mec='mvn  eclipse:clean eclipse:eclipse -Declipse.pde=true -Declipse.manifest=MANIFEST.MF'
+alias psj='ps -aux | grep java'
+alias k9='kill -9 '
+alias kill-9='kill -9 '
+alias hgr='history | grep '
+alias psa='ps -aux'
+alias psg='ps -aux | grep '
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias cd..'=cd ..'
+
+alias mkdir='mkdir -p'
+alias dus='du -ms * | sort -n'
+alias dh='df -kh'
+alias rf='rm -rf '
+alias srf='sudo rm -rf '
+
+if [[ -x $(which gls) ]]
+then
+	alias ls='ls --color=auto'
+else
+	alias ls='ls -G'
+fi
+
+alias la='ls -la'
+alias l='ls -la'
+alias lh='ls -lah'
+alias lr='ls -latr'
+alias lrh='ls -latrh'
+
+alias flc='dscacheutil -flushcache'
+
+
+alias veh='sudo vi /etc/hosts'
+alias svi='sudo vi'
+alias p='echo $PWD'
+
+if [[ -x $(which vim) ]]
+then
+	alias vi='vim'
+fi
+
+if [[ -x $(which gtar) ]]
+then
+	alias tar='gtar'
+fi
+
+if [[ -x $(which gls) ]]
+then
+	alias ls='gls --color=auto'
+fi
+
+if [[ -x $(which uncrustify) ]]
+then
+	alias format="uncrustify -c $SHAREDDIR/misc/uncrustify.cfg --replace --no-backup " 
+fi
+
+if [[ -x $(which brew) ]]
+then
+	alias bi="brew install "
+	alias bs="brew search "
+fi
+
+# to find memory hogs:
+alias mhtop='top -l 1 -o rsize | head -20'
+alias mhps='ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
+
+# to find CPU hogs
+alias cpuh='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
+
+alias finderShowHidden='defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder'
+alias finderHideHidden='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder'
+# disable and re-enable Dashboard Widgets
+alias disableDashboard='defaults write com.apple.dashboard mcx-disabled -bool YES; killall Dock'
+alias enableDashboard='defaults delete com.apple.dashboard mcx-disabled; killAll Dock'
+
+alias java6='export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home;export PATH=$JAVA_HOME/bin:$PATH'
+alias java5='export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5/Home;export PATH=$JAVA_HOME/bin:$PATH'
+alias soylatte='export JAVA_HOME=$HOME/dev/soylatte;export PATH=$JAVA_HOME/bin:$PATH'
+
+# git
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gco='git checkout'
+alias gb='git branch'
+alias gs='git status'
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias w='watch "$@"'
+alias eesdev='ssh -X root@eesdev.missiondata.net'
+#alias lf="perl -e'%h=map{/.\s/;99**(ord$&&7)-$`,$_}`du -h`;die@h{sort%h}'"
+alias tunnel='ssh -C -q -f -N -l jbirchfield -L 1522:74.121.70.3:1521 eesdev.missiondata.net'
+alias rainyday="ssh -i $HOME/Dropbox/Base_Server.pem ubuntu@54.243.219.139"
+alias awspuppet="ssh -i $HOME/Dropbox/puppet.pem ubuntu@ec2-54-234-162-92.compute-1.amazonaws.com" 
+alias awsgit="ssh -i $HOME/Dropbox/puppet.pem ubuntu@ec2-54-242-94-79.compute-1.amazonaws.com"
+alias pjgit="ssh root@10.30.90.190"
+alias pjcpm="ssh root@10.30.90.191"
+alias pjspm="ssh root@10.30.90.192"
+alias pjnode="ssh root@10.30.90.193"
+alias memcached='ssh -C -q -f -N -l root -L 11211:localhost:11211 eesdev.missiondata.net'
+alias igniteutnnel='ssh -C -q -f -N -l root -L 8123:localhost:8123 eesdev.missiondata.net'
+alias sshtunnel='ssh -C -q -f -N -l root -L 9993:74.121.70.1:993 eesdev.missiondata.net'

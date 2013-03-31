@@ -1,0 +1,66 @@
+#will invoke the CPAN module and force install the suplied module name
+#example cpanint HTTP::Request
+cpaninst () { perl -MCPAN -we "force install ${1}";}
+
+#will cd to the supplied directory then list it's contents
+cdl () { cd ${1}; ls -lah;}
+
+#shortcut for extracting a gzipped tarball
+tzx () { gtar -zxvf ${1};}
+
+#shortcut for making a gzipped tarball
+tzc () { gtar --exclude-vcs -zcvf ${1}.tar.gz ${@};}
+#-----------
+# Searching:
+#-----------
+# ff:  to find a file under the current directory
+ff () { /usr/bin/find . -name "${1}" -print ; }
+
+#finds any file containing the supplied string
+ffg () { /usr/bin/find . -name "${1}" | xargs grep "${2}" ; }
+
+#finds any file containing the supplied string ignoring case
+ffgi () { /usr/bin/find . -name "${1}" | xargs grep -i "${2}" ; }
+
+#finds any file whose name starts with a given string
+ffs () { /usr/bin/find . -name "$@"'*' ; }
+
+#finds any file whose name ends with a given string
+ffe () { /usr/bin/find . -name '*'"$@" ; }
+
+#finds any file which matches the supplied string and cats it
+ffc () { /usr/bin/find . -name "${1}" | xargs cat ; }
+
+#find any string in the current directory of files
+grepc() { /usr/bin/grep -in --color ${1} * ; }
+
+#removes all the .svn directories recursivly
+rmsvn () { /usr/bin/find . -name ".svn" | xargs sudo rm -rf ; }
+
+#finds any file larger than the supplied parameter
+#see man find
+#example: hogs 100M
+#will find any file over 50 megabytes
+hogs() { find . -type f -size +${1} ; }
+
+#find every file on the machine with an updated timestamp within the last 24 hours
+recent() { mdfind 'kMDItemFSCreationDate >= $time.yesterday'; }
+
+#find every file on the machine matching the given string 
+#with an updated timestamp within the last 24 hours
+grecent() { mdfind 'kMDItemFSCreationDate >= $time.yesterday' | grep ${1};}
+
+function mkcd {
+    if [ $# -ne 1 ]; then 
+    	echo "usage: mkcd directory_name"
+    elif [ -d "${1}" ]; then
+    	echo "(directory already existed)"
+    	cd "$1"
+    elif [ -e "${1}" ]; then
+    	echo "file exists"
+    else
+    	mkdir "${1}" && cd "${1}"
+    fi
+}
+
+function mountAndroid { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }

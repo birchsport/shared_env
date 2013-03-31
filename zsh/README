@@ -1,0 +1,3 @@
+## The zsh_functions directory will be loaded first
+## on the fpath.  Any functions file beginning with an '_'
+## will automatically be loaded.

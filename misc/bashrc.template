@@ -1,0 +1,47 @@
+# Template for your.bashrc file.  All of the below if statements
+# should remain in place so you can pick up all of the shared
+# alias, functions, exports, and directives.
+export SHAREDDIR=$HOME/bash
+export SHELLDIR=$(echo $SHELL | awk -F "/" '{print $3}') 
+export LOCALENVDIR=$HOME/.env
+
+
+if [ -f /etc/bashrc ]; then
+        source /etc/bashrc
+fi
+
+for f in $SHAREDDIR/*
+do
+	if [ -x $f -a -f $f ]; then
+	echo $f
+		source $f
+	fi
+done
+
+for f in $SHAREDDIR/$SHELLDIR/*
+do
+	if [ -x $f -a -f $f ]; then
+	echo $f
+		source $f
+	fi
+done
+
+if [ -d $LOCALENVDIR -a $(ls -A $LOCALENVDIR) ]; then
+	for f in $LOCALENVDIR/*
+	do
+		if [ -x $f -a -f $f ]; then
+		echo $f
+			source $f
+		fi
+	done
+fi
+
+
+#### Custom area for your specific aliases, exports, functions and directives.
+
+### exports
+
+### aliases
+
+### functions
+

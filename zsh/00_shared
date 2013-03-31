@@ -1,0 +1,128 @@
+ulimit -c unlimited
+
+fpath=($HOME/.env $SHAREDDIR/zsh/zsh_functions $fpath)
+
+alias realias='source $HOME/.zshrc'
+
+# Skip all this for non-interactive shells
+[[ -z "$PS1" ]] && return
+autoload -U promptinit
+promptinit
+
+autoload -U colors
+colors
+
+setopt prompt_subst
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+
+vcs_info_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "${vcs_info_msg_0_} %{\e[0;36m%}%B%*%b"
+  else
+    echo "%{\e[0;36m%}%B%*%b"
+  fi
+}
+RPROMPT=$'$(vcs_info_wrapper)'
+
+# Set prompt (white and purple, nothing too fancy)
+PROMPT=$'%{\e[0;35m%}%m:%{\e[0;37m%}%1/ %(!.#.>) %{\e[00m%}'
+
+## no need to type 'cd' to change directory, just type the directory and you will got there
+setopt autocd
+
+precmd () {
+ case $TERM in
+ screen)
+ print -Pn "\e]0;%n@%m: %1/\a"
+ print -Pn "\ekzsh: %1/\e\\"
+ ;;
+ xterm*|rxvt)
+ print -Pn "\e]0;%n@%m: %1/\a"
+ ;;
+ esac
+}
+
+preexec () {
+ case $TERM in
+ screen)
+ print -Pn "\e]0;%n@%m: $1\a"
+ print -Pn "\ek$1\e\\"
+ ;;
+ xterm*|rxvt)
+ print -Pn "\e]0;%n@%m: $1\a"
+ ;;
+ esac
+
+}
+# Set less options
+if [[ -x $(which less) ]]
+then
+    export PAGER="less"
+    export LESS="--ignore-case --LONG-PROMPT --QUIET --chop-long-lines -Sm --RAW-CONTROL-CHARS --quit-if-one-screen --no-init"
+    if [[ -x $(which lesspipe.sh) ]]
+    then
+	LESSOPEN="| lesspipe.sh %s"
+	export LESSOPEN
+    fi
+fi
+
+# Set default editor
+if [[ -x $(which vi) ]]
+then
+    export EDITOR="vi"
+    export USE_EDITOR=$EDITOR
+    export VISUAL=$EDITOR
+fi
+
+setopt CORRECT
+autoload colors zsh/terminfo
+
+# Zsh settings for history
+#export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
+export HISTSIZE=25000
+export HISTFILE=~/.zsh_history
+export SAVEHIST=5000
+setopt HIST_ALLOW_CLOBBER
+setopt HIST_REDUCE_BLANKS
+setopt EXTENDED_HISTORY
+
+
+# Prompts for confirmation after 'rm *' etc
+# Helps avoid mistakes like 'rm * o' when 'rm *.o' was intended
+setopt RM_STAR_WAIT
+
+# Background processes aren't killed on exit of shell
+setopt AUTO_CONTINUE
+
+# Don’t write over existing files with >, use >! instead
+setopt NOCLOBBER
+
+# Don’t nice background processes
+setopt NO_BG_NICE
+
+# Watch other user login/out
+watch=notme
+export LOGCHECK=60
+
+# ext alias (just type 'file.ext' to open in default editor)
+alias -s 'pdf=open'
+alias -s 'txt=open'
+alias -s 'xml=open'
+alias -s 'cfg=open'
+
+# Automatically background processes (no output to terminal etc)
+alias 'z=echo $RANDOM > /dev/null; zz'
+zz () {
+    echo $*
+    $* &> "/tmp/z-$1-$RANDOM" &!
+}
+##############################
+## enable completion functions
+autoload -U compinit
+compinit
+
+bk() {
+    cp -a "$1" "${1}_$(date --iso-8601=seconds)"
+}

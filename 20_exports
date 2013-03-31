@@ -1,0 +1,48 @@
+#XCode binaries
+export PATH=/Developer/usr/bin
+
+#ensure we load up the most common locations
+export PATH=$PATH:/bin
+export PATH=$PATH:/sbin
+export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/sbin
+export PATH=$PATH:/usr/bin
+export PATH=$PATH:/usr/sbin
+export PATH=$PATH:/opt/local/bin
+export PATH=$PATH:/opt/local/sbin
+
+#add in personal binaries in the dev folder
+export PATH=$PATH:$HOME/dev/bin
+
+#add in personal binaries in the home folder
+export PATH=$BINDIR:$PATH
+
+#beefs up the maven executable a bit
+export MAVEN_OPTS='-Xms512m -Xmx1024m'
+
+export JRUBY_HOME=$HOME/dev/jruby-1.7.3
+export PATH=$JRUBY_HOME/bin:$PATH
+
+export GROOVY_HOME=$HOME/dev/groovy-2.1.1
+export PATH=$PATH:$GROOVY_HOME/bin
+
+export GRADLE_HOME=$HOME/dev/gradle-1.4
+export PATH=$PATH:$GRADLE_HOME/bin
+
+export SCALA_HOME=$HOME/dev/scala-2.10.0
+export PATH=$SCALA_HOME/bin:$PATH
+
+export PLAY_HOME=$HOME/dev/play-2.1.0
+export PATH=$PLAY_HOME:$PATH
+
+export STORM_HOME=$HOME/dev/storm-0.8.2
+export PATH=$STORM_HOME/bin:$PATH
+
+#the standard library paths
+export LD_LIBRAY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRAY_PATH=$LD_LIBRARY_PATH:/usr/lib
+
+export SBT_HOME=$HOME/dev/sbt
+export PATH=$SBT_HOME/bin:$PATH
+
+export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256m -Xss2m"
