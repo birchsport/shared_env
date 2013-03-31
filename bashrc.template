@@ -1,0 +1,45 @@
+# Template for your.bashrc file.  All of the below if statements
+# should remain in place so you can pick up all of the shared
+# alias, functions, exports, and directives.
+set -o vi
+export SHAREDDIR=$HOME/shared_env
+export SHELLDIR=$(echo $SHELL | awk -F "/" '{print $3}') 
+
+
+if [ -f /etc/bashrc ]; then
+        source /etc/bashrc
+fi
+
+for f in $SHAREDDIR/*
+do
+	if [ -x $f -a -f $f ]; then
+	echo $f
+		source $f
+	fi
+done
+
+for f in $SHAREDDIR/$SHELLDIR/*
+do
+	if [ -x $f -a -f $f ]; then
+	echo $f
+		source $f
+	fi
+done
+
+
+
+
+#### Custom area for your specific aliases, exports, functions and directives.
+
+### exports
+
+### aliases
+
+### functions
+
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+ssh-add -K $hOME/.ssh/id_rsa
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
