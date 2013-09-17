@@ -26,7 +26,7 @@ export PATH=$JRUBY_HOME/bin:$PATH
 export GROOVY_HOME=$HOME/dev/groovy-2.1.1
 export PATH=$PATH:$GROOVY_HOME/bin
 
-export GRADLE_HOME=$HOME/dev/gradle-1.4
+export GRADLE_HOME=$HOME/dev/gradle-1.7
 export PATH=$PATH:$GRADLE_HOME/bin
 
 export SCALA_HOME=$HOME/dev/scala-2.10.0
